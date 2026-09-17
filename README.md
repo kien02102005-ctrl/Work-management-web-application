@@ -44,7 +44,7 @@
         /* --- 1. GIAO DIỆN ĐĂNG NHẬP --- */
         #login-screen {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             display: flex;
             justify-content: center;
@@ -123,10 +123,10 @@
             background-color: #1d4ed8;
         }
 
-        /* --- 2. GIAO DIỆN CHÍNH (FULL WIDTH 100%) --- */
+        /* --- 2. GIAO DIỆN CHÍNH (CÂN BẰNG FULL 100%) --- */
         #app-screen {
             display: flex;
-            width: 100vw;
+            width: 100%;
             min-height: 100vh;
         }
 
@@ -192,7 +192,7 @@
 
         .main-content {
             flex: 1;
-            width: calc(100vw - 250px);
+            min-width: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -271,7 +271,7 @@
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             padding: 10px 0;
             width: 100%;
@@ -391,7 +391,7 @@
 
         .kanban-board {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             width: 100%;
         }
@@ -573,6 +573,15 @@
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+
+        @media (max-width: 768px) {
+            #app-screen {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -2177,8 +2186,6 @@
 
             const targetUserInfo = registeredUsers.find(u => u.username === kpiTargetUser);
             const userKpiType = (targetUserInfo && targetUserInfo.kpiType) ? targetUserInfo.kpiType : 'staff';
-            
-            const kpiTypeName = userKpiType === 'leader' ? 'Lãnh đạo' : (userKpiType === 'cleaner' ? 'Lao Công' : 'Cán bộ/Nhân viên');
 
             let totalSelf = 0, totalAdmin = 0, totalMax = 0;
             Object.keys(sectionMaxScores).forEach(k => totalMax += parseFloatStrict(sectionMaxScores[k]));
@@ -2356,7 +2363,6 @@
             });
             kpiTableRows.push(totalRow);
 
-            // Bảng Ký tên Lãnh đạo Khoa
             const signatureTable = new Table({
                 width: { size: 100, type: WidthType.PERCENTAGE },
                 borders: {
@@ -2405,36 +2411,26 @@
                         }),
                         new Paragraph({
                             alignment: AlignmentType.CENTER,
-                            spacing: { after: 200 },
-                            children: [
-                                new TextRun({ text: `(Loại bảng: ${kpiTypeName})`, italics: true, font: "Times New Roman", size: 22 })
-                            ]
-                        }),
-                        new Paragraph({
+                            spacing: { after: 300 },
                             children: [
                                 new TextRun({ text: `Họ và tên: `, bold: true, font: "Times New Roman", size: 22 }),
-                                new TextRun({ text: kpiTargetUser, font: "Times New Roman", size: 22 })
-                            ]
-                        }),
-                        new Paragraph({
-                            spacing: { after: 200 },
-                            children: [
-                                new TextRun({ text: `Đơn vị: `, bold: true, font: "Times New Roman", size: 22 }),
-                                new TextRun({ text: "Khoa Hóa Lý - Trung tâm KSBT Bắc Ninh", font: "Times New Roman", size: 22 })
+                                new TextRun({ text: `${kpiTargetUser.toUpperCase()}`, font: "Times New Roman", size: 22 }),
+                                new TextRun({ text: ` | Bảng áp dụng: `, bold: true, font: "Times New Roman", size: 22 }),
+                                new TextRun({ text: `${kpiTypeName}`, font: "Times New Roman", size: 22 })
                             ]
                         }),
                         new Table({
                             width: { size: 100, type: WidthType.PERCENTAGE },
                             rows: kpiTableRows
                         }),
-                        new Paragraph({ spacing: { after: 300 }, children: [] }),
+                        new Paragraph({ spacing: { after: 400 }, children: [] }),
                         signatureTable
                     ]
                 }]
             });
 
             Packer.toBlob(doc).then(blob => {
-                saveAs(blob, `Bieu_Danh_Gia_KPI_${kpiTargetUser}_${selectedKpiMonth}.docx`);
+                saveAs(blob, `Phieu_Danh_Gia_KPI_${kpiTargetUser}_${selectedKpiMonth}.docx`);
             });
         }
     </script>
