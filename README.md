@@ -41,15 +41,19 @@
             overflow-x: hidden;
         }
 
-        /* --- 1. GIAO DIỆN ĐĂNG NHẬP --- */
+        /* --- 1. GIAO DIỆN ĐĂNG NHẬP (CÂN ĐỐI TUYỆT ĐỐI CÁC CẠNH) --- */
         #login-screen {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100vh;
             background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            padding: 20px;
         }
 
         .login-card {
@@ -57,9 +61,10 @@
             padding: 40px 30px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            width: 380px;
-            max-width: 90%;
+            width: 100%;
+            max-width: 400px;
             text-align: center;
+            margin: auto;
         }
 
         .login-card .icon {
@@ -123,7 +128,7 @@
             background-color: #1d4ed8;
         }
 
-        /* --- 2. GIAO DIỆN CHÍNH (CÂN BẰNG FULL 100%) --- */
+        /* --- 2. GIAO DIỆN CHÍNH (CÂN BẰNG KHÔNG GIAN) --- */
         #app-screen {
             display: flex;
             width: 100%;
@@ -192,21 +197,23 @@
 
         .main-content {
             flex: 1;
-            min-width: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             overflow-y: auto;
+            min-width: 0; /* Ngăn lỗi tràn flexbox */
         }
 
         .top-bar {
             background-color: #fff;
-            padding: 15px 25px;
+            padding: 15px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e2e8f0;
             width: 100%;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .top-bar h2 {
@@ -218,6 +225,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .admin-select-box {
@@ -260,7 +268,7 @@
 
         .tab-content {
             flex: 1;
-            padding: 25px;
+            padding: 24px;
             display: none;
             width: 100%;
         }
@@ -271,9 +279,8 @@
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
-            padding: 10px 0;
             width: 100%;
         }
 
@@ -296,13 +303,13 @@
 
         .chart-container {
             position: relative;
-            height: 350px;
+            height: 320px;
             width: 100%;
         }
 
         .task-input-bar {
             background: #fff;
-            padding: 15px;
+            padding: 16px;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             margin-bottom: 20px;
@@ -434,13 +441,15 @@
         .kpi-section-title {
             background: #1e40af;
             color: #ffffff;
-            padding: 10px 16px;
+            padding: 12px 16px;
             font-size: 15px;
             font-weight: bold;
             border-radius: 6px 6px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .row-sub-header {
@@ -526,6 +535,7 @@
             gap: 15px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             width: 100%;
+            flex-wrap: wrap;
         }
 
         .kpi-month-selector-bar select {
@@ -562,6 +572,7 @@
             border-radius: 8px;
             border: 1px solid #e2e8f0;
             width: 100%;
+            flex-wrap: wrap;
         }
 
         .sync-status {
@@ -573,15 +584,6 @@
             display: flex;
             align-items: center;
             gap: 5px;
-        }
-
-        @media (max-width: 768px) {
-            #app-screen {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -765,7 +767,7 @@
             <!-- Tab 4: Lịch công tác -->
             <div id="tab-lich-cong-tac" class="tab-content">
                 <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
                         <div>
                             <h3 style="margin-bottom: 5px;"><i class="fa-solid fa-file-invoice" style="color: #2563eb;"></i> LỊCH CÔNG TÁC VÀ TÀI LIỆU KHOA HÓA LÝ</h3>
                             <p style="color: #64748b; font-size: 13px;">Tất cả tài khoản cán bộ có thể xem và tải về các file Lịch công tác (Word, Excel, PDF...) do Admin đăng tải.</p>
@@ -827,7 +829,7 @@
                 </div>
 
                 <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
                         <h3 style="font-size: 18px; margin: 0; display: flex; align-items: center;">
                             PHIẾU ĐÁNH GIÁ KPI CỦA: <span id="kpi-target-name-display" style="color: #2563eb; text-transform: uppercase; margin-left: 8px;"></span>
                             <span id="kpi-type-badge-display" class="kpi-badge-type"></span>
@@ -2186,6 +2188,8 @@
 
             const targetUserInfo = registeredUsers.find(u => u.username === kpiTargetUser);
             const userKpiType = (targetUserInfo && targetUserInfo.kpiType) ? targetUserInfo.kpiType : 'staff';
+            
+            const kpiTypeName = userKpiType === 'leader' ? 'Lãnh đạo' : (userKpiType === 'cleaner' ? 'Lao Công' : 'Cán bộ/Nhân viên');
 
             let totalSelf = 0, totalAdmin = 0, totalMax = 0;
             Object.keys(sectionMaxScores).forEach(k => totalMax += parseFloatStrict(sectionMaxScores[k]));
@@ -2363,6 +2367,7 @@
             });
             kpiTableRows.push(totalRow);
 
+            // Bảng Ký tên Lãnh đạo Khoa
             const signatureTable = new Table({
                 width: { size: 100, type: WidthType.PERCENTAGE },
                 borders: {
@@ -2411,19 +2416,16 @@
                         }),
                         new Paragraph({
                             alignment: AlignmentType.CENTER,
-                            spacing: { after: 300 },
+                            spacing: { after: 200 },
                             children: [
-                                new TextRun({ text: `Họ và tên: `, bold: true, font: "Times New Roman", size: 22 }),
-                                new TextRun({ text: `${kpiTargetUser.toUpperCase()}`, font: "Times New Roman", size: 22 }),
-                                new TextRun({ text: ` | Bảng áp dụng: `, bold: true, font: "Times New Roman", size: 22 }),
-                                new TextRun({ text: `${kpiTypeName}`, font: "Times New Roman", size: 22 })
+                                new TextRun({ text: `Họ và tên cán bộ: ${kpiTargetUser.toUpperCase()} (${kpiTypeName})`, bold: true, font: "Times New Roman", size: 22 })
                             ]
                         }),
                         new Table({
                             width: { size: 100, type: WidthType.PERCENTAGE },
                             rows: kpiTableRows
                         }),
-                        new Paragraph({ spacing: { after: 400 }, children: [] }),
+                        new Paragraph({ spacing: { after: 300 }, children: [] }),
                         signatureTable
                     ]
                 }]
